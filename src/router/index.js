@@ -10,6 +10,10 @@ import CategoriesIndex from '@/components/categories/Index'
 import CategoriesShow from '@/components/categories/Show'
 import CategoriesNew from '@/components/categories/New'
 
+import BooksIndex from '@/components/books/Index'
+import BooksShow from '@/components/books/Show'
+import BooksNew from '@/components/books/New'
+
 Vue.use(Router)
 
 export default new Router({
@@ -59,6 +63,26 @@ export default new Router({
       path: '/categories/:id',
       name: 'Category',
       component: CategoriesShow
+    },
+    {
+      path: '/books',
+      name: 'Books',
+      component: BooksIndex
+    },
+    {
+      path: '/books/new',
+      name: 'New Book',
+      component: BooksNew
+    },
+    {
+      path: '/books/:id/edit',
+      name: 'Edit Book',
+      component: BooksNew
+    },
+    {
+      path: '/books/:id',
+      name: 'Book',
+      component: BooksShow
     }
   ]
 })
