@@ -10,7 +10,6 @@
       <v-col
         cols="12"
         sm="8"
-        md="6"
       >
         <v-card class="elevation-12">
           <v-form @submit.prevent="save">
@@ -52,14 +51,50 @@
                 type="text"
                 required
               ></v-text-field>
+              <v-autocomplete
+                v-model="model.authors"
+                :items="authors"
+                chips
+                label="Authors"
+                item-text="name"
+                item-value="name"
+                multiple
+              ></v-autocomplete>
               <v-textarea
-                v-model="model.about"
-                label="About"
+                v-model="model.summary"
+                label="Summary"
                 rows="1"
                 counter="300"
                 auto-grow
                 required
               ></v-textarea>
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    v-model="model.price"
+                    label="Price"
+                    type="decimal"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    v-model="model.cover_url"
+                    label="Cover image url"
+                    type="url"
+                    required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-autocomplete
+                v-model="model.categories"
+                :items="categories"
+                chips
+                label="Categories"
+                item-text="name"
+                item-value="name"
+                multiple
+              ></v-autocomplete>
             </v-card-text>
             <v-card-actions>
               <v-spacer />
@@ -81,9 +116,10 @@ export default {
     return {
       loading: false,
       model: {
-        movies: []
+        categories: []
       },
-      movies: []
+      categories: [],
+      authors: []
     }
   },
 
@@ -94,6 +130,16 @@ export default {
         .then(response => (this.model = response.data.data))
         .catch(errors => console.log(errors))
     }
+
+    axios
+      .get('http://localhost:4000/api/authors/')
+      .then(response => (this.authors = response.data.data))
+      .catch(errors => console.log(errors))
+
+    axios
+      .get('http://localhost:4000/api/categories/')
+      .then(response => (this.categories = response.data.data))
+      .catch(errors => console.log(errors))
   },
   methods: {
     save () {

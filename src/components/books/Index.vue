@@ -11,6 +11,7 @@
         <v-btn
           icon
           large
+          color="red"
           @click.prevent="newBook()"
         >
           <v-icon>mdi-plus</v-icon>
