@@ -22,17 +22,17 @@
               <v-btn
                 icon
                 large
-                @click.prevent="indexAuthors()"
+                @click.prevent="indexCategories()"
               >
                 <v-icon>mdi-table-of-contents</v-icon>
               </v-btn>
-              <v-toolbar-title>{{ model.id ? 'Edit Author' : 'New Author' }}</v-toolbar-title>
+              <v-toolbar-title>{{ model.id ? 'Edit Category' : 'New Category' }}</v-toolbar-title>
             <v-spacer/>
             <v-btn
               icon
               large
               v-if="model.id"
-              @click.prevent="showAuthor(model.id)"
+              @click.prevent="showCategory(model.id)"
             >
               <v-icon>mdi-eye</v-icon>
             </v-btn>
@@ -40,7 +40,7 @@
               icon
               large
               v-if="model.id"
-              @click.prevent="deleteAuthor(model.id)"
+              @click.prevent="deleteCategory(model.id)"
             >
               <v-icon>mdi-delete</v-icon>
             </v-btn>
@@ -52,14 +52,6 @@
                 type="text"
                 required
               ></v-text-field>
-              <v-textarea
-                v-model="model.about"
-                label="About"
-                rows="1"
-                counter="300"
-                auto-grow
-                required
-              ></v-textarea>
             </v-card-text>
             <v-card-actions>
               <v-spacer />
@@ -75,7 +67,7 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'AuthorsNew',
+  name: 'CategoriesNew',
   components: {},
   data () {
     return {
@@ -90,23 +82,23 @@ export default {
   mounted () {
     if (this.$route.params.id) {
       axios
-        .get('http://localhost:4000/api/authors/' + this.$route.params.id)
+        .get('http://localhost:4000/api/categories/' + this.$route.params.id)
         .then(response => (this.model = response.data.data))
         .catch(errors => console.log(errors))
     }
   },
   methods: {
     save () {
-      const author = this.model
+      const category = this.model
       if (this.$route.params.id) {
         // Post to server
-        axios.put('http://localhost:4000/api/authors/' + this.$route.params.id, { author }).then(res => {
+        axios.put('http://localhost:4000/api/categories/' + this.$route.params.id, { category }).then(res => {
           // Post a status message
           this.loading = true
           if (res.status === 200) {
             // now send the user to the next route
             this.$router.push({
-              name: 'Author',
+              name: 'Category',
               params: {
                 id: res.data.data.id
               }
@@ -117,13 +109,13 @@ export default {
         })
       } else {
         // Post to server
-        axios.post('http://localhost:4000/api/authors', { author }).then(res => {
+        axios.post('http://localhost:4000/api/categories', { category }).then(res => {
           // Post a status message
           this.loading = true
           if (res.status === 201) {
             // now send the user to the next route
             this.$router.push({
-              name: 'Author',
+              name: 'Category',
               params: {
                 id: res.data.data.id
               }
@@ -134,24 +126,24 @@ export default {
         })
       }
     },
-    showAuthor () {
+    showCategory () {
       this.$router.push({
-        name: 'Author',
+        name: 'Category',
         id: this.model.id
       })
     },
-    deleteAuthor () {
+    deleteCategory () {
       axios
-        .delete('http://localhost:4000/api/authors/' + this.model.id)
+        .delete('http://localhost:4000/api/categories/' + this.model.id)
         .then(
           this.$router.push({
-            name: 'Authors'
+            name: 'Categories'
           })
         )
     },
-    indexAuthors () {
+    indexCategories () {
       this.$router.push({
-        name: 'Authors'
+        name: 'Categories'
       })
     }
   }

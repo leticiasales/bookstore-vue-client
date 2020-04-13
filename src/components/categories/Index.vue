@@ -11,7 +11,7 @@
         <v-btn
           icon
           large
-          @click.prevent="newAuthor()"
+          @click.prevent="newCategory()"
         >
           <v-icon>mdi-plus</v-icon>
         </v-btn>
@@ -20,27 +20,20 @@
             <thead>
               <tr>
                 <th class="text-left">Name</th>
-                <th class="text-left">About</th>
                 <th class="text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="author in authors" :key="author.id">
-                <td>{{ author.name }}</td>
+              <tr v-for="category in categories" :key="category.id">
+                <td>{{ category.name }}</td>
                 <td>
-                  <span
-                    class="d-inline-block text-truncate"
-                    style="max-width: 250px;"
-                  >{{ author.about }}</span>
-                </td>
-                <td>
-                  <v-btn class="ma-2" text icon @click.prevent="showAuthor(author.id)" color="primary">
+                  <v-btn class="ma-2" text icon @click.prevent="showCategory(category.id)" color="primary">
                     <v-icon>mdi-eye</v-icon>
                   </v-btn>
-                  <v-btn class="ma-2" text icon @click.prevent="editAuthor(author.id)" color="teal">
+                  <v-btn class="ma-2" text icon @click.prevent="editCategory(category.id)" color="teal">
                     <v-icon>mdi-pencil</v-icon>
                   </v-btn>
-                  <v-btn class="ma-2" text icon @click.prevent="deleteAuthor(author.id)" color="red darken-2">
+                  <v-btn class="ma-2" text icon @click.prevent="deleteCategory(category.id)" color="red darken-2">
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </td>
@@ -56,48 +49,48 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'AuthorsIndex',
+  name: 'CategoriesIndex',
   components: {},
   data () {
     return {
       loading: true,
       fields: [{ key: 'name' }, { key: 'actions' }],
-      authors: []
+      categories: []
     }
   },
   beforeMount () {
-    this.getAuthors()
+    this.getCategories()
   },
   methods: {
-    showAuthor (id) {
+    showCategory (id) {
       this.$router.push({
-        name: 'Author',
+        name: 'Category',
         params: { id: id }
       })
     },
-    newAuthor () {
+    newCategory () {
       this.$router.push({
-        name: 'New Author'
+        name: 'New Category'
       })
     },
-    editAuthor (id) {
+    editCategory (id) {
       this.$router.push({
-        name: 'Edit Author',
+        name: 'Edit Category',
         params: { id: id }
       })
     },
-    deleteAuthor (id) {
+    deleteCategory (id) {
       this.loading = true
       axios
-        .delete('http://localhost:4000/api/authors/' + id)
-        .then(response => this.getAuthors())
+        .delete('http://localhost:4000/api/categories/' + id)
+        .then(response => this.getCategories())
         .catch(err => console.log(err))
     },
-    getAuthors () {
+    getCategories () {
       axios
-        .get('http://localhost:4000/api/authors')
+        .get('http://localhost:4000/api/categories')
         .then(response => {
-          this.authors = response.data.data
+          this.categories = response.data.data
           this.loading = false
         })
         .catch(err => console.log(err))

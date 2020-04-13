@@ -9,23 +9,6 @@
 
 <script>
 export default {
-  name: 'app',
-  data () {
-    return {
-      user: null
-    }
-  },
-  methods: {
-    login () {
-      this.$auth.loginRedirect()
-    },
-    async refreshActiveUser () {
-      this.user = {}
-    },
-    async logout () {
-      this.user = null
-      this.$router.push('/')
-    }
-  }
+  name: 'app'
 }
 </script>
