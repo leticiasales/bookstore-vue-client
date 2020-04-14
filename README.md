@@ -1,30 +1,33 @@
-# client
+# Boostore's VueJs Client
 
-> A Vue.js project
+## Getting Started
 
-## Build Setup
+These instructions will cover usage information and for the docker container 
 
-``` bash
-# install dependencies
-npm install
+### Prerequisities
 
-# serve with hot reload at localhost:8080
-npm run dev
+In order to run this container you'll need docker installed.
 
-# build for production with minification
-npm run build
+* [Windows](https://docs.docker.com/windows/started)
+* [OS X](https://docs.docker.com/mac/started/)
+* [Linux](https://docs.docker.com/linux/started/)
 
-# build for production and view the bundle analyzer report
-npm run build --report
+### Usage
 
-# run unit tests
-npm run unit
+#### Build
 
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+```shell
+docker-compose build
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Start client container on background
+
+```shell
+docker-compose up -d
+```
+
+Go to [http://localhost:8080][http://localhost:8080] and see application running
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.

@@ -5,10 +5,9 @@
       color="primary"
     >
     <v-toolbar-title>
-      <v-btn text icon href="/" dark>
-        <v-icon>mdi-home</v-icon>
+      <v-btn text href="/" dark class="d-flex align-center">
+        <span>Bookstore</span>
       </v-btn>
-      <span class="white--text">Bookstore</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <router-link :to="{'name': 'Authors'}">
