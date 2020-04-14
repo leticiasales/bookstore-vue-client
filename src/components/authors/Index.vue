@@ -1,6 +1,5 @@
 <template>
   <v-container
-    class="fill-height"
     fluid
   >
     <v-row
@@ -9,11 +8,12 @@
     >
       <v-col>
         <v-btn
-          icon
-          large
+          depressed
+          small
+          color="primary"
           @click.prevent="newAuthor()"
         >
-          <v-icon>mdi-plus</v-icon>
+          New Author
         </v-btn>
         <v-simple-table>
           <template v-slot:default>

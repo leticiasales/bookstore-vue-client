@@ -97,41 +97,24 @@ export default {
   methods: {
     save () {
       const author = this.model
-      if (this.$route.params.id) {
-        // Post to server
-        axios.put('http://localhost:4000/api/authors/' + this.$route.params.id, { author }).then(res => {
-          // Post a status message
-          this.loading = true
-          if (res.status === 200) {
-            // now send the user to the next route
-            this.$router.push({
-              name: 'Author',
-              params: {
-                id: res.data.data.id
-              }
-            })
-          } else {
-            this.status = res.data.message
-          }
-        })
-      } else {
-        // Post to server
-        axios.post('http://localhost:4000/api/authors', { author }).then(res => {
-          // Post a status message
-          this.loading = true
-          if (res.status === 201) {
-            // now send the user to the next route
-            this.$router.push({
-              name: 'Author',
-              params: {
-                id: res.data.data.id
-              }
-            })
-          } else {
-            this.status = res.data.message
-          }
-        })
-      }
+      axios.request({
+        method: author.id ? 'put' : 'get',
+        url: 'http://localhost:4000/api/authors/' + (author.id ? author.id : ''),
+        data: { author }
+      }).then(res => {
+        this.loading = true
+        if (res.status === 200 || res.status === 201) {
+          // now send the user to the next route
+          this.$router.push({
+            name: 'Author',
+            params: {
+              id: res.data.data.id
+            }
+          })
+        } else {
+          this.status = res.data.message
+        }
+      }).catch(err => console.log(err))
     },
     showAuthor () {
       this.$router.push({

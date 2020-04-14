@@ -46,7 +46,7 @@
           <v-card-title>
             <h2 class="display-1">{{ model.name }}</h2>
             <v-spacer></v-spacer>
-            <span class="title">${{ model.price }}</span>
+            <span class="title">{{ model.price | currency }}</span>
           </v-card-title>
 
           <v-card-subtitle>
@@ -71,7 +71,7 @@
           <v-divider class="mx-4"></v-divider>
 
           <v-card-text>
-            <v-chip v-for="category in model.categories" :key="category.id">
+            <v-chip v-for="category in model.categories" :key="category.id" class="mr-1">
               {{ category.name }}
             </v-chip>
           </v-card-text>

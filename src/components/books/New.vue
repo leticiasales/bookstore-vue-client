@@ -122,12 +122,15 @@ export default {
       authors: []
     }
   },
-
-  mounted () {
+  beforeMount () {
     if (this.$route.params.id) {
       axios
         .get('http://localhost:4000/api/books/' + this.$route.params.id)
-        .then(response => (this.model = response.data.data))
+        .then(response => {
+          this.model = response.data.data
+          this.model.authors = this.model.authors.map(a => a.name)
+          this.model.categories = this.model.categories.map(c => c.name)
+        })
         .catch(errors => console.log(errors))
     }
 
@@ -144,41 +147,24 @@ export default {
   methods: {
     save () {
       const book = this.model
-      if (this.$route.params.id) {
-        // Post to server
-        axios.put('http://localhost:4000/api/books/' + this.$route.params.id, { book }).then(res => {
-          // Post a status message
-          this.loading = true
-          if (res.status === 200) {
-            // now send the user to the next route
-            this.$router.push({
-              name: 'Book',
-              params: {
-                id: res.data.data.id
-              }
-            })
-          } else {
-            this.status = res.data.message
-          }
-        })
-      } else {
-        // Post to server
-        axios.post('http://localhost:4000/api/books', { book }).then(res => {
-          // Post a status message
-          this.loading = true
-          if (res.status === 201) {
-            // now send the user to the next route
-            this.$router.push({
-              name: 'Book',
-              params: {
-                id: res.data.data.id
-              }
-            })
-          } else {
-            this.status = res.data.message
-          }
-        })
-      }
+      axios.request({
+        method: book.id ? 'put' : 'get',
+        url: 'http://localhost:4000/api/books/' + (book.id ? book.id : ''),
+        data: { book }
+      }).then(res => {
+        this.loading = true
+        if (res.status === 200 || res.status === 201) {
+          // now send the user to the next route
+          this.$router.push({
+            name: 'Book',
+            params: {
+              id: res.data.data.id
+            }
+          })
+        } else {
+          this.status = res.data.message
+        }
+      }).catch(err => console.log(err))
     },
     showBook () {
       this.$router.push({

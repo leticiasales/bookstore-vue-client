@@ -89,41 +89,24 @@ export default {
   methods: {
     save () {
       const category = this.model
-      if (this.$route.params.id) {
-        // Post to server
-        axios.put('http://localhost:4000/api/categories/' + this.$route.params.id, { category }).then(res => {
-          // Post a status message
-          this.loading = true
-          if (res.status === 200) {
-            // now send the user to the next route
-            this.$router.push({
-              name: 'Category',
-              params: {
-                id: res.data.data.id
-              }
-            })
-          } else {
-            this.status = res.data.message
-          }
-        })
-      } else {
-        // Post to server
-        axios.post('http://localhost:4000/api/categories', { category }).then(res => {
-          // Post a status message
-          this.loading = true
-          if (res.status === 201) {
-            // now send the user to the next route
-            this.$router.push({
-              name: 'Category',
-              params: {
-                id: res.data.data.id
-              }
-            })
-          } else {
-            this.status = res.data.message
-          }
-        })
-      }
+      axios.request({
+        method: category.id ? 'put' : 'get',
+        url: 'http://localhost:4000/api/categories/' + (category.id ? category.id : ''),
+        data: { category }
+      }).then(res => {
+        this.loading = true
+        if (res.status === 200 || res.status === 201) {
+          // now send the user to the next route
+          this.$router.push({
+            name: 'Category',
+            params: {
+              id: res.data.data.id
+            }
+          })
+        } else {
+          this.status = res.data.message
+        }
+      }).catch(err => console.log(err))
     },
     showCategory () {
       this.$router.push({

@@ -1,39 +1,33 @@
 <template>
   <v-container
-    class="fill-height"
     fluid
   >
     <v-row
-      align="center"
+      align="start"
       justify="center"
     >
       <v-col>
         <v-btn
-          icon
-          large
-          color="red"
+          depressed
+          small
+          color="primary"
           @click.prevent="newBook()"
         >
-          <v-icon>mdi-plus</v-icon>
+          New Book
         </v-btn>
         <v-simple-table>
           <template v-slot:default>
             <thead>
               <tr>
                 <th class="text-left">Name</th>
-                <th class="text-left">Summary</th>
+                <th class="text-left">Price</th>
                 <th class="text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="book in books" :key="book.id">
                 <td>{{ book.name }}</td>
-                <td>
-                  <span
-                    class="d-inline-block text-truncate"
-                    style="max-width: 250px;"
-                  >{{ book.summary }}</span>
-                </td>
+                <td>{{ book.price }}</td>
                 <td>
                   <v-btn class="ma-2" text icon @click.prevent="showBook(book.id)" color="primary">
                     <v-icon>mdi-eye</v-icon>
