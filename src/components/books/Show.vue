@@ -15,7 +15,7 @@
           class="mx-auto"
         >
           <v-toolbar
-            v-if="admin"
+            v-if="this.$store.state.admin"
             color="primary"
             dark
             flat
@@ -81,6 +81,7 @@
               block
               class="white--text"
               color="primary"
+              @click="addToCart()"
             >
               Add to Cart
             </v-btn>
@@ -98,13 +99,7 @@ export default {
   components: {},
   data () {
     return {
-      model: {
-        name: 'Title',
-        cover_url: 'https://cdn.vuetifyjs.com/images/cards/mountain.jpg',
-        summary: 'Bla bla bla. This is the book\'s summary.',
-        price: 19.9
-      },
-      admin: true
+      model: {}
     }
   },
   beforeMount () {
@@ -132,6 +127,13 @@ export default {
     indexBooks () {
       this.$router.push({
         name: 'Books'
+      })
+    },
+    addToCart () {
+      this.$store.commit('addToCart', this.model)
+      this.$store.commit('saveCart')
+      this.$router.push({
+        name: 'Cart'
       })
     }
   }

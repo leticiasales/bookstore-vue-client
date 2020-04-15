@@ -27,7 +27,7 @@
             <tbody>
               <tr v-for="book in books" :key="book.id">
                 <td>{{ book.name }}</td>
-                <td>{{ book.price }}</td>
+                <td>{{ book.price | currency }}</td>
                 <td>
                   <v-btn class="ma-2" text icon @click.prevent="showBook(book.id)" color="primary">
                     <v-icon>mdi-eye</v-icon>
