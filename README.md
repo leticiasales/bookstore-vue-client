@@ -26,7 +26,9 @@ Start client container on background
 docker-compose up -d
 ```
 
-Go to [http://localhost:8080][http://localhost:8080] and see application running
+Go to http://localhost:8080 and see application running.
+
+You can turn of admin mode by setting environment variable ADMIN to false.
 
 ## License
 
